@@ -1,47 +1,50 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/10 18:04:35 by igngonza          #+#    #+#              #
-#    Updated: 2025/02/11 18:32:41 by igngonza         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-MLX_PATH = mlx_linux
-MLX_DIR = mlx_linux
 NAME = so_long
+
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-SRCS = main.c
+
+CFLAGS = -Wall -Werror -Wextra
+
+CFLAGS += -I ./includes
+
+INCLUDES = -I/usr/include -Imlx
+
+FLAGS_MLX = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
+
+PRINT_LIB = printf/libftprintf.a
+
+LIB_FT = libft/libft.a
+
+SRCS_SL = get_next_line.c get_next_line_utils.c starting_position.c map.c map_checker.c error.c main.c checkers.c apply_sprites.c moves.c win.c
+
+SRCS = $(addprefix src/, $(SRCS_SL))
+
 OBJS = $(SRCS:.c=.o)
 
-ifeq ($(shell uname), Linux)
-    INCLUDES = -I/usr/include -I$(MLX_PATH)
-    MLX_FLAGS = -L$(MLX_PATH) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
-else
-    INCLUDES = -I/opt/X11/include -I$(MLX_PATH)
-    MLX_FLAGS = -L$(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
-    X11_FLAGS = -L/usr/X11/lib -lXext -lX11
-endif
+all: $(NAME)
 
-all: $(MLX_LIB) $(NAME)
+$(NAME): $(OBJS) mlx/libmlx.a
+	@make -C printf
+	@make -C libft
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(FLAGS_MLX) $(PRINT_LIB) $(LIB_FT) -o $(NAME)
+
+mlx/libmlx.a:
+	@$(MAKE) -C mlx
 
 %.o: %.c
-		$(CC) $(CFLAGS) -I$(MLX_PATH) -c -o $@ $< $(INCLUDES)
-
-$(NAME): $(OBJS)
-		$(CC) $(CFLAGS) $(MLX_FLAGS) $(X11_FLAGS) -o $(NAME) $(OBJS)
-
-$(MLX_LIB):
-		@make -C $(MLX_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-		@rm -f $(OBJS)
+	@make fclean -C printf
+	@make fclean -C libft
+	@make clean -C mlx
+	rm -f $(OBJS)
 
-fclean: clean
-		@rm -f $(NAME)
+fclean:	clean
+	@make fclean -C printf
+	@make fclean -C libft
+	@make clean -C mlx
+	rm -f $(NAME)
 
-re: fclean all
+re:	fclean all
+
+.PHONY: all clean fclean re

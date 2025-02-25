@@ -3,28 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 20:19:01 by igngonza          #+#    #+#             */
-/*   Updated: 2025/02/11 20:25:29 by igngonza         ###   ########.fr       */
+/*   Created: 2025/02/25 12:36:06 by igngonza          #+#    #+#             */
+/*   Updated: 2025/02/25 15:22:04 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/colors.h"
-#include "../inc/map.h"
-#include "../libft/libft.h"
-#include <stdio.h>
+#include "../includes/so_long.h"
 
-t_err	ft_newmap_error(void)
+void	set_height(t_map *map, int fd)
 {
-	t_err map_err;
+	char	*line;
+	int		i;
 
-	map_err.inv_borders = 0;
-	map_err.inv_char = 0;
-	map_err.inv_n_exits = 0;
-	map_err.inv_n_collect = 0;
-	map_err.inv_rowlen = 0;
-	map_err.inv_n_players = 0;
-	map_err.inv_n_ghosts = 0;
-	return (map_err);
+	i = 1;
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+		i++;
+	}
+	map->height = i - 1;
+	free(line);
+	close(fd);
+}
+
+void	set_map(int fd, t_map *map)
+{
+	int i;
+	char *file;
+	char *line;
+
+	i = 0;
+	line = get_next_line(fd);
+	file = ft_calloc(1, 1);
+	while (line)
+	{
+		file = ft_strjoin(file, line);
+		free(line);
+		line = get_next_line(fd);
+		i++;
+	}
+	map->matrix = ft_split(file, '\n');
+	map->copy = ft_split(file, '\n');
+	free(file);
+	close(fd);
 }
