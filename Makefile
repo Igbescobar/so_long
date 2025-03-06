@@ -18,7 +18,8 @@ SRCS_SL = get_next_line.c get_next_line_utils.c starting_position.c map.c map_ch
 
 SRCS = $(addprefix src/, $(SRCS_SL))
 
-OBJS = $(SRCS:.c=.o)
+OBJ_DIR = obj
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS_SL:.c=.o))
 
 all: $(NAME)
 
@@ -26,18 +27,19 @@ $(NAME): $(OBJS) mlx/libmlx.a
 	@make -C printf
 	@make -C libft
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(FLAGS_MLX) $(PRINT_LIB) $(LIB_FT) -o $(NAME)
+	
+$(OBJ_DIR)/%.o: src/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 mlx/libmlx.a:
 	@$(MAKE) -C mlx
-
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	@make fclean -C printf
 	@make fclean -C libft
 	@make clean -C mlx
-	rm -f $(OBJS)
+	rm -rf $(OBJ_DIR)
 
 fclean:	clean
 	@make fclean -C printf

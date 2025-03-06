@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:17:27 by igngonza          #+#    #+#             */
-/*   Updated: 2025/02/25 15:17:52 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:46:19 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	starting_position_finder(t_map *map)
 {
-	int y;
-	int x;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (y < map->height)
@@ -25,8 +25,8 @@ void	starting_position_finder(t_map *map)
 		{
 			if (map->matrix[y][x] == 'P')
 			{
-				map->p.x = x;
-				map->p.y = y;
+				map->player_str.y = y;
+				map->player_str.x = x;
 				return ;
 			}
 			x++;

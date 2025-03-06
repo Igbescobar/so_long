@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 16:01:25 by igngonza          #+#    #+#             */
-/*   Updated: 2025/02/25 16:42:02 by igngonza         ###   ########.fr       */
+/*   Created: 2025/03/06 11:20:22 by igngonza          #+#    #+#             */
+/*   Updated: 2025/03/06 11:20:23 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,117 +25,110 @@ int	moves(int key, t_map *map)
 	else if (key == ESC)
 		exit(0);
 	fill(map);
-	ft_printf("\033cMoves \n%d\n", map->p.moves);
+	ft_printf("\033cMoves \n%d\n", map->player_str.moves);
 	return (0);
 }
 
 void	up(t_map *map)
 {
+	char	next_pos;
+
 	starting_position_finder(map);
-	if (map->matrix[map->p.y - 1][map->p.x] == '0')
+	next_pos = map->matrix[map->player_str.y - 1][map->player_str.x];
+	if (next_pos == '1')
+		return ;
+	if (map->matrix[map->player_str.y][map->player_str.x] == 'P'
+		&& map->prev_tile == 'E')
+		map->matrix[map->player_str.y][map->player_str.x] = 'E';
+	else
+		map->matrix[map->player_str.y][map->player_str.x] = '0';
+	map->prev_tile = next_pos;
+	if (next_pos == '0' || next_pos == 'E' || next_pos == 'C')
 	{
-		map->matrix[map->p.y][map->p.x] = '0';
-		map->matrix[map->p.y - 1][map->p.x] = 'P';
-		map->p.y = map->p.y - 1;
-		map->p.moves++;
-	}
-	else if (map->matrix[map->p.y - 1][map->p.x] == 'C')
-	{
-		map->matrix[map->p.y][map->p.x] = '0';
-		map->matrix[map->p.y - 1][map->p.x] = 'P';
-		map->p.y = map->p.y - 1;
-		map->p.moves++;
-		map->collect--;
-	}
-	else if (map->matrix[map->p.y - 1][map->p.x] == 'E' && map->collect == 0)
-	{
-		map->matrix[map->p.y][map->p.x] = '0';
-		map->matrix[map->p.y - 1][map->p.x] = 'P';
-		map->p.y = map->p.y - 1;
-		map->p.moves++;
-		win();
+		map->matrix[map->player_str.y - 1][map->player_str.x] = 'P';
+		map->player_str.y--;
+		map->player_str.moves++;
+		if (next_pos == 'E' && map->collect == 0)
+			win();
+		else if (next_pos == 'C')
+			map->collect--;
 	}
 }
 
 void	down(t_map *map)
 {
+	char	next_pos;
+
 	starting_position_finder(map);
-	if (map->matrix[map->p.y + 1][map->p.x] == '0')
+	next_pos = map->matrix[map->player_str.y + 1][map->player_str.x];
+	if (next_pos == '1')
+		return ;
+	if (map->matrix[map->player_str.y][map->player_str.x] == 'P'
+		&& map->prev_tile == 'E')
+		map->matrix[map->player_str.y][map->player_str.x] = 'E';
+	else
+		map->matrix[map->player_str.y][map->player_str.x] = '0';
+	map->prev_tile = next_pos;
+	if (next_pos == '0' || next_pos == 'E' || next_pos == 'C')
 	{
-		map->matrix[map->p.y][map->p.x] = '0';
-		map->matrix[map->p.y + 1][map->p.x] = 'P';
-		map->p.y = map->p.y + 1;
-		map->p.moves++;
-	}
-	else if (map->matrix[map->p.y + 1][map->p.x] == 'C')
-	{
-		map->matrix[map->p.y][map->p.x] = '0';
-		map->matrix[map->p.y + 1][map->p.x] = 'P';
-		map->p.y = map->p.y + 1;
-		map->p.moves++;
-		map->collect--;
-	}
-	else if (map->matrix[map->p.y + 1][map->p.x] == 'E' && map->collect == 0)
-	{
-		map->matrix[map->p.y][map->p.x] = '0';
-		map->p.y = map->p.y + 1;
-		map->p.moves++;
-		win();
+		map->matrix[map->player_str.y + 1][map->player_str.x] = 'P';
+		map->player_str.y++;
+		map->player_str.moves++;
+		if (next_pos == 'E' && map->collect == 0)
+			win();
+		else if (next_pos == 'C')
+			map->collect--;
 	}
 }
 
 void	right(t_map *map)
 {
+	char	next_pos;
+
 	starting_position_finder(map);
-	if (map->matrix[map->p.y][map->p.x + 1] == '0')
+	next_pos = map->matrix[map->player_str.y][map->player_str.x + 1];
+	if (next_pos == '1')
+		return ;
+	if (map->matrix[map->player_str.y][map->player_str.x] == 'P'
+		&& map->prev_tile == 'E')
+		map->matrix[map->player_str.y][map->player_str.x] = 'E';
+	else
+		map->matrix[map->player_str.y][map->player_str.x] = '0';
+	map->prev_tile = next_pos;
+	if (next_pos == '0' || next_pos == 'E' || next_pos == 'C')
 	{
-		map->matrix[map->p.y][map->p.x] = '0';
-		map->matrix[map->p.y][map->p.x + 1] = 'P';
-		map->p.y = map->p.x + 1;
-		map->p.moves++;
-	}
-	else if (map->matrix[map->p.y][map->p.x + 1] == 'C')
-	{
-		map->matrix[map->p.y][map->p.x] = '0';
-		map->matrix[map->p.y][map->p.x + 1] = 'P';
-		map->p.y = map->p.x + 1;
-		map->p.moves++;
-		map->collect--;
-	}
-	else if (map->matrix[map->p.y][map->p.x + 1] == 'E' && map->collect == 0)
-	{
-		map->matrix[map->p.y][map->p.x] = '0';
-		map->matrix[map->p.y][map->p.x + 1] = 'P';
-		map->p.y = map->p.x + 1;
-		map->p.moves++;
-		win();
+		map->matrix[map->player_str.y][map->player_str.x + 1] = 'P';
+		map->player_str.x++;
+		map->player_str.moves++;
+		if (next_pos == 'E' && map->collect == 0)
+			win();
+		else if (next_pos == 'C')
+			map->collect--;
 	}
 }
 
 void	left(t_map *map)
 {
+	char	next_pos;
+
 	starting_position_finder(map);
-	if (map->matrix[map->p.y][map->p.x - 1] == '0')
+	next_pos = map->matrix[map->player_str.y][map->player_str.x - 1];
+	if (next_pos == '1')
+		return ;
+	if (map->matrix[map->player_str.y][map->player_str.x] == 'P'
+		&& map->prev_tile == 'E')
+		map->matrix[map->player_str.y][map->player_str.x] = 'E';
+	else
+		map->matrix[map->player_str.y][map->player_str.x] = '0';
+	map->prev_tile = next_pos;
+	if (next_pos == '0' || next_pos == 'E' || next_pos == 'C')
 	{
-		map->matrix[map->p.y][map->p.x] = '0';
-		map->matrix[map->p.y][map->p.x - 1] = 'P';
-		map->p.y = map->p.x - 1;
-		map->p.moves++;
-	}
-	else if (map->matrix[map->p.y][map->p.x - 1] == 'C')
-	{
-		map->matrix[map->p.y][map->p.x] = '0';
-		map->matrix[map->p.y][map->p.x - 1] = 'P';
-		map->p.y = map->p.x - 1;
-		map->p.moves++;
-		map->collect--;
-	}
-	else if (map->matrix[map->p.y][map->p.x - 1] == 'E' && map->collect == 0)
-	{
-		map->matrix[map->p.y][map->p.x] = '0';
-		map->matrix[map->p.y][map->p.x - 1] = 'P';
-		map->p.y = map->p.x - 1;
-		map->p.moves++;
-		win();
+		map->matrix[map->player_str.y][map->player_str.x - 1] = 'P';
+		map->player_str.x--;
+		map->player_str.moves++;
+		if (next_pos == 'E' && map->collect == 0)
+			win();
+		else if (next_pos == 'C')
+			map->collect--;
 	}
 }

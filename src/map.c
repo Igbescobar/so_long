@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:36:06 by igngonza          #+#    #+#             */
-/*   Updated: 2025/02/25 15:22:04 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:55:42 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	set_height(t_map *map, int fd)
 
 void	set_map(int fd, t_map *map)
 {
-	int i;
-	char *file;
-	char *line;
+	int		i;
+	char	*file;
+	char	*line;
 
 	i = 0;
 	line = get_next_line(fd);

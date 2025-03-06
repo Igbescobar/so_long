@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:16:56 by igngonza          #+#    #+#             */
-/*   Updated: 2025/02/25 17:02:45 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:41:02 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 void	choose(t_map *map, int y, int x)
 {
 	if (map->matrix[y][x] == '1')
-		mlx_put_image_to_window(map->ph.mlx, map->ph.wnd, map->ph.wall, x
-			* map->ph.x, y * map->ph.y);
+		mlx_put_image_to_window(map->img_str.mlx, map->img_str.wnd,
+			map->img_str.wall, x * map->img_str.x, y * map->img_str.y);
 	else if (map->matrix[y][x] == '0')
-		mlx_put_image_to_window(map->ph.mlx, map->ph.wnd, map->ph.floor, x
-			* map->ph.x, y * map->ph.y);
+		mlx_put_image_to_window(map->img_str.mlx, map->img_str.wnd,
+			map->img_str.floor, x * map->img_str.x, y * map->img_str.y);
 	else if (map->matrix[y][x] == 'P')
 	{
-		mlx_put_image_to_window(map->ph.mlx, map->ph.wnd, map->ph.floor, x
-			* map->ph.x, y * map->ph.y);
-		mlx_put_image_to_window(map->ph.mlx, map->ph.wnd, map->ph.character, x
-			* map->ph.x, y * map->ph.y);
+		mlx_put_image_to_window(map->img_str.mlx, map->img_str.wnd,
+			map->img_str.floor, x * map->img_str.x, y * map->img_str.y);
+		mlx_put_image_to_window(map->img_str.mlx, map->img_str.wnd,
+			map->img_str.character, x * map->img_str.x, y * map->img_str.y);
 	}
 	else if (map->matrix[y][x] == 'E')
-		mlx_put_image_to_window(map->ph.mlx, map->ph.wnd, map->ph.exit, x
-			* map->ph.x, y * map->ph.y);
+		mlx_put_image_to_window(map->img_str.mlx, map->img_str.wnd,
+			map->img_str.exit, x * map->img_str.x, y * map->img_str.y);
 	else if (map->matrix[y][x] == 'C')
 	{
-		mlx_put_image_to_window(map->ph.mlx, map->ph.wnd, map->ph.floor, x
-			* map->ph.x, y * map->ph.y);
-		mlx_put_image_to_window(map->ph.mlx, map->ph.wnd, map->ph.food, x
-			* map->ph.x, y * map->ph.y);
+		mlx_put_image_to_window(map->img_str.mlx, map->img_str.wnd,
+			map->img_str.floor, x * map->img_str.x, y * map->img_str.y);
+		mlx_put_image_to_window(map->img_str.mlx, map->img_str.wnd,
+			map->img_str.food, x * map->img_str.x, y * map->img_str.y);
 	}
 }
 
@@ -57,20 +57,23 @@ int	fill(t_map *map)
 
 void	images(t_map *map)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	x = 64;
 	y = 64;
-	map->ph.y = 64;
-	map->ph.x = 64;
-	map->ph.wall = mlx_xpm_file_to_image(map->ph.mlx, BACKGROUND, &y, &x);
-	map->ph.floor = mlx_xpm_file_to_image(map->ph.mlx, WALL, &y, &x);
-	map->ph.character = mlx_xpm_file_to_image(map->ph.mlx, CHARACTER, &y, &x);
-	map->ph.food = mlx_xpm_file_to_image(map->ph.mlx, CHECKPOINT, &y, &x);
-	map->ph.exit = mlx_xpm_file_to_image(map->ph.mlx, EXIT, &y, &x);
-	if (map->ph.wall == NULL || map->ph.floor == NULL
-		|| map->ph.character == NULL || map->ph.food == NULL
-		|| map->ph.exit == NULL)
-		ft_strerror("UNABLE TO LOAD SPRITES.\n");
+	map->img_str.y = 50;
+	map->img_str.x = 50;
+	map->img_str.wall = mlx_xpm_file_to_image(map->img_str.mlx, BUSH, &y, &x);
+	map->img_str.floor = mlx_xpm_file_to_image(map->img_str.mlx, BACKGROUND, &y,
+			&x);
+	map->img_str.character = mlx_xpm_file_to_image(map->img_str.mlx, CHARACTER,
+			&y, &x);
+	map->img_str.food = mlx_xpm_file_to_image(map->img_str.mlx, POKEBALL, &y,
+			&x);
+	map->img_str.exit = mlx_xpm_file_to_image(map->img_str.mlx, EXIT, &y, &x);
+	if (map->img_str.wall == NULL || map->img_str.floor == NULL
+		|| map->img_str.character == NULL || map->img_str.food == NULL
+		|| map->img_str.exit == NULL)
+		ft_strerror("Issue while loading the sprites.\n");
 }

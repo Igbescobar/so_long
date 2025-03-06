@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:42:51 by igngonza          #+#    #+#             */
-/*   Updated: 2025/02/25 16:43:06 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:03:06 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	win(void)
 {
-	ft_printf("YOU WON!!!\n");
+	ft_printf("Congratulations, you have won!\n");
 	exit(0);
 }
