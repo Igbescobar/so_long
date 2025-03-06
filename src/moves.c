@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:20:22 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/06 15:47:00 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:20:56 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	up(t_map *map)
 		map->player_str.y--;
 		map->player_str.moves++;
 		if (next_pos == 'E' && map->collect == 0)
-			win();
+			map->game_won = 1;
 		else if (next_pos == 'C')
 			map->collect--;
 	}
