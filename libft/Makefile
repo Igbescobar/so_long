@@ -55,7 +55,7 @@ BONUS_CACHE = .cache
 LIBC    = ar rcs
 CC      = cc
 RM      = rm -f
-CFLAGS  = -Wall -Wextra -Werror
+CFLAGS  = -Wall -Wextra -Werror -fPIC
 
 all: $(NAME)
 
