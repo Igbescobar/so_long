@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:03:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/06 12:40:33 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:47:25 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_map
 	int				player;
 	int				collect;
 	char			prev_tile;
+	int				game_won;
 	t_player		player_str;
 	t_exit			exit_str;
 	t_collectables	collectables_str;

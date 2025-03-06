@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:20:22 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/06 11:20:23 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:47:00 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	moves(int key, t_map *map)
 		exit(0);
 	fill(map);
 	ft_printf("\033cMoves \n%d\n", map->player_str.moves);
+	if (map->game_won)
+		win();
 	return (0);
 }
 
@@ -75,7 +77,7 @@ void	down(t_map *map)
 		map->player_str.y++;
 		map->player_str.moves++;
 		if (next_pos == 'E' && map->collect == 0)
-			win();
+			map->game_won = 1;
 		else if (next_pos == 'C')
 			map->collect--;
 	}
@@ -101,7 +103,7 @@ void	right(t_map *map)
 		map->player_str.x++;
 		map->player_str.moves++;
 		if (next_pos == 'E' && map->collect == 0)
-			win();
+			map->game_won = 1;
 		else if (next_pos == 'C')
 			map->collect--;
 	}
@@ -127,7 +129,7 @@ void	left(t_map *map)
 		map->player_str.x--;
 		map->player_str.moves++;
 		if (next_pos == 'E' && map->collect == 0)
-			win();
+			map->game_won = 1;
 		else if (next_pos == 'C')
 			map->collect--;
 	}

@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:36:06 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/03 17:55:42 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:48:06 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	set_map(int fd, t_map *map)
 	}
 	map->matrix = ft_split(file, '\n');
 	map->copy = ft_split(file, '\n');
+	map->game_won = 0;
 	free(file);
 	close(fd);
 }
